@@ -139,6 +139,11 @@ class AutoUpdate extends Common {
         if($message == '') {
             $message = $merge;
         }
+        
+        // Development
+        if(!defined(UPDATE)){ 
+            $autoupdate = '-1';
+        }
                 
         return "[".formatJSEND("success",array("currentversion"=>$app[0]['version'],"remoteversion"=>$remote[0]["sha"],"message"=>$message,"archive"=>$this->archive,"autoupdate"=>$autoupdate,"name"=>$app[0]['name']))."]";
     }
