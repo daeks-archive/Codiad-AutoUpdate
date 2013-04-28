@@ -53,7 +53,11 @@
                     if($vars[0]['data']['autoupdate'] == '1') {
                         echo '<button class="btn-left" onclick="codiad.autoupdate.update();return false;">Update Codiad</button>&nbsp;<button class="btn-left" onclick="codiad.autoupdate.download();return false;">Download Codiad</button>&nbsp;';
                     } else {
-                        echo '<button class="btn-left" onclick="codiad.autoupdate.update();return false;">Test Permission</button>&nbsp;<button class="btn-left" onclick="codiad.autoupdate.download();return false;">Download Codiad</button>&nbsp;';
+                        if($vars[0]['data']['autoupdate'] == '-1') {
+                            echo '<button class="btn-left" onclick="codiad.autoupdate.download();return false;">Download Codiad</button>&nbsp;';
+                        } else {
+                            echo '<button class="btn-left" onclick="codiad.autoupdate.update();return false;">Test Permission</button>&nbsp;<button class="btn-left" onclick="codiad.autoupdate.download();return false;">Download Codiad</button>&nbsp;';
+                        }
                     }
                 }
             ?><button class="btn-right" onclick="codiad.modal.unload();return false;">Cancel</button>
