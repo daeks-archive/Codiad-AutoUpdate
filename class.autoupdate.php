@@ -108,7 +108,7 @@ class AutoUpdate extends Common {
             $app = getJSON('version.php');
         }
         
-        if(is_writeable(BASEPATH) && is_writeable(COMPONENTS) && is_writeable(THEMES)) {
+        if(is_writeable(BASE_PATH) && is_writeable(COMPONENTS) && is_writeable(THEMES)) {
             $autoupdate = '1';
         } else {
             $autoupdate = '0';
