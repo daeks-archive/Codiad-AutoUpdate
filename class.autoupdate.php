@@ -104,17 +104,16 @@ class AutoUpdate extends Common {
             }
             $app[0]['version'] = $branch[0];
             $app[0]['name'] = "";
+            $autoupdate = '-1';
         } else {
             $app = getJSON('version.php');
+            if(is_writeable(BASE_PATH) && is_writeable(COMPONENTS) && is_writeable(THEMES)) {
+                $autoupdate = '1';
+            } else {
+                $autoupdate = '0';
+            }
         }
-        
-        if(is_writeable(BASE_PATH) && is_writeable(COMPONENTS) && is_writeable(THEMES)) {
-            $autoupdate = '1';
-        } else {
-            $autoupdate = '0';
-        }
-        
-        
+
         if($this->remote != '') {
             $remote = json_decode(file_get_contents($this->remote),true);
         }
@@ -209,6 +208,7 @@ if ($res === TRUE) {
 
     // cleanup and restart codiad
     rrmdir($path."/backup");
+    rmdir($path."/backup");
     unlink($commit.".zip");
     unlink($commit.".php");
     header("Location: ".str_replace($commit.".php","",$_SERVER["SCRIPT_NAME"]));
