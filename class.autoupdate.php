@@ -210,10 +210,7 @@ if ($res === TRUE) {
     // store current commit to version.json
     $version = array();
     $version[] = array("version"=>$commit);
-    if(!file_exists($path."/components/update")) {
-        mkdir($path."/components/update");
-    }
-    file_put_contents($path."/components/update/version.json",json_encode($version));  
+    file_put_contents($path."/data/version.php", "<?php/*|" . json_encode($version) . "|*/?>");  
 
     // cleanup and restart codiad
     rrmdir($path."/backup");
