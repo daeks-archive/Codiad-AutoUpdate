@@ -108,7 +108,7 @@ class AutoUpdate extends Common {
             $app = getJSON('version.php');
         }
         
-        if(is_writeable(BASEPATH)) {
+        if(is_writeable(BASEPATH) && is_writeable(COMPONENTS) && is_writeable(THEMES)) {
             $autoupdate = '1';
         } else {
             $autoupdate = '0';
@@ -138,11 +138,6 @@ class AutoUpdate extends Common {
         
         if($message == '') {
             $message = $merge;
-        }
-        
-        // Development
-        if(!defined(UPDATE)){ 
-            $autoupdate = '-1';
         }
                 
         return "[".formatJSEND("success",array("currentversion"=>$app[0]['version'],"remoteversion"=>$remote[0]["sha"],"message"=>$message,"archive"=>$this->archive,"autoupdate"=>$autoupdate,"name"=>$app[0]['name']))."]";
