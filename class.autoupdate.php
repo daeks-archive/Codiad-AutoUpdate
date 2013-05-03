@@ -7,7 +7,6 @@
 */
 
 require_once('../../common.php');
-include(COMPONENTS.'/common/class.common.php');
 
 class AutoUpdate extends Common {
 
