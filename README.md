@@ -2,6 +2,11 @@
 
 This plugin hooks into the current update check and provides the possibility to automatically update your system. 
 
+# Requirements
+
+- Write Permission for webserver user for whole codiad directory
+- Installed ZIP Extension for PHP
+
 # Installation
 
 - Download the zip file and extract it to your plugins folder
