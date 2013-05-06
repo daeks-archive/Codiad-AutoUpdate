@@ -6,6 +6,8 @@ This plugin hooks into the current update check and provides the possibility to 
 
 - Write Permission for webserver user for whole codiad directory
 - Installed ZIP Extension for PHP
+- Installed OPENSSL Extension for PHP
+- Environment variable ```allow_url_fopen``` has been set to ```On```
 
 # Installation
 

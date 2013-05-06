@@ -107,7 +107,11 @@ class AutoUpdate extends Common {
         } else {
             $app = getJSON('version.php');
             if(is_writeable(BASE_PATH) && is_writeable(COMPONENTS) && is_writeable(THEMES)) {
-                $autoupdate = '1';
+                if(extension_loaded('zip') && extension_loaded('openssl') && ini_get('allow_url_fopen') == 1) {
+                    $autoupdate = '1';
+                } else {
+                    $autoupdate = '-1';
+                }
             } else {
                 $autoupdate = '0';
             }
