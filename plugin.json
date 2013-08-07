@@ -2,5 +2,6 @@
     "version": "0.4",
     "name" : "Codiad AutoUpdate",
     "description" : "Hooks into the Codiad updater to allow for automatic update",
+    "image" : "https://raw.github.com/daeks/Codiad-AutoUpdate/master/screen.png",
     "url" : "https://github.com/daeks/Codiad-AutoUpdate"
   } ]
