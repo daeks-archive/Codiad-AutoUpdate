@@ -35,12 +35,12 @@
         // Update Check
         //////////////////////////////////////////////////////////////////
 
-        check: function () {
+        check: function (type) {
             var _this = this;
             $('#modal-content form')
                 .die('submit'); // Prevent form bubbling
-                codiad.modal.load(500, this.dialog + '?action=check');
-                $('#modal-content').html('<div id="modal-loading"></div><div align="center">Contacting GitHub...</div><br>');
+                codiad.modal.load(500, this.dialog + '?action=check&type='+type);
+                $('#modal-content').html('<div id="modal-loading"></div><div align="center">Checking...</div><br>');
         }, 
         
         //////////////////////////////////////////////////////////////////
@@ -51,13 +51,15 @@
             var _this = this;
             var remoteversion = $('#modal-content form input[name="remoteversion"]')
                         .val();
-            codiad.modal.load(350, this.dialog + '?action=update&remoteversion=' + remoteversion);            
+            var remotename = $('#modal-content form input[name="remotename"]')
+                        .val();            
+            codiad.modal.load(350, this.dialog + '?action=update&remoteversion=' + remoteversion + '&remotename=' + remotename);            
             $('#modal-content form')
                     .live('submit', function (e) {
                     e.preventDefault();
                     var remoteversion = $('#modal-content form input[name="remoteversion"]')
                         .val();
-                        $('#modal-content').html('<div id="modal-loading"></div><br>Downloading ' + remoteversion + '...<br><br>');
+                        $('#modal-content').html('<div id="modal-loading"></div><div align="center">Downloading & Installing...</div><br>');
                         $.get(_this.controller + '?action=download&remoteversion=' + remoteversion, function(data) {
                             var response = codiad.jsend.parse(data);
                             codiad.modal.unload();

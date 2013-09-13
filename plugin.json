@@ -1,7 +1,10 @@
 [ { "author" : "daeks",
-    "version": "0.4",
+    "version": "1.0",
     "name" : "Codiad AutoUpdate",
     "description" : "Hooks into the Codiad updater to allow for automatic update",
+<<<<<<< HEAD
     "image" : "https://raw.github.com/daeks/Codiad-AutoUpdate/master/screen.png",
+=======
+>>>>>>> update to 1.0
     "url" : "https://github.com/daeks/Codiad-AutoUpdate"
   } ]

@@ -14,7 +14,13 @@ This plugin hooks into the current update check and provides the possibility to 
 - Download the zip file and extract it to your plugins folder
 - Enable this plugin in the plugins manager in Codiad
 
+# Change Update URL
+
+- Define UPDATEURL in your config.php
+- UPDATEURL needs syntax like https://api.github.com/repos/Codiad/Codiad/tags
+- Update Channel is only available if update.codiad.com is used
+
 # WARNING
 
-This plugin is still in development and at a first alpha level. It is tested on Ubuntu 12.04 with Apache 2 but may mess up your system.
+It is tested on Ubuntu 12.04 with Apache 2 but may mess up your system.
 All files during the upgrade are stored at /backup if there is some failure.
