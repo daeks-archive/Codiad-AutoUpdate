@@ -79,7 +79,7 @@ class AutoUpdate extends Common {
             }   
         }
         
-        if(!file_exists(DATA."/".get_called_class()."/config.php")) {
+        if(!file_exists(DATA."/config/".get_called_class().".php")) {
           mkdir(DATA."/config");
           $settings = array("type"=>"stable");
           saveJSON("/config/".get_called_class().".php",$settings);
