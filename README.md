@@ -27,5 +27,5 @@ This plugin hooks into the current update check and provides the possibility to 
 
 # WARNING
 
-It is tested on Ubuntu 12.04 with Apache 2 but may mess up your system.
+It is tested on Ubuntu 12.04 with Apache 2.2 and Windows 2008R2 with Apache 2.4 but may mess up your system.
 All files during the upgrade are stored at /backup if there is some failure.
