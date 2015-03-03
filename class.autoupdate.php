@@ -308,7 +308,7 @@ if ($res === TRUE) {
         fwrite($write, $data);
         fclose($write);
         
-        session_unset(); session_destroy(); session_start();
+        @session_unset(); @session_destroy(); session_start();
         echo formatJSEND("success",null);
     }
 
