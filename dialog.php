@@ -63,7 +63,11 @@
             <br><br><b><label><?php i18n("Congratulation, your system is up to date."); ?></label></b>
             <?php if($vars[0]['data']['name'] != '') { ?>
             <em class="note"><?php i18n("Last update was done by "); ?><?php echo $vars[0]['data']['name']; ?>.</em><br>
-            <?php } } ?>
+            <?php } 
+                if($vars[0]['data']['autoupdate'] == '1') {
+                    echo '<div align="right"><a href="#" style="color:white; text-decoration: none;" onclick="codiad.autoupdate.update();return false;">Force Update Codiad</a></div>';
+                }
+            } ?>
             <?php if($vars[0]['data']['nightly']) { ?>
             <br><em class="note">Note: Your installation is a nightly build. Codiad might be unstable.</em><br>
             <?php } ?>
