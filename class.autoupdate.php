@@ -239,11 +239,13 @@ class AutoUpdate extends Common {
   
 $commit = "'.$this->commit.'";
 
-function rrmdir($path){
-    return is_file($path)?
-    @unlink($path):
-    @array_map("rrmdir",glob($path."/*"))==@rmdir($path);
-}
+function delTree($dir) { 
+ $files = array_diff(scandir($dir), array(".","..")); 
+  foreach ($files as $file) { 
+    (is_dir("$dir/$file")) ? delTree("$dir/$file") : unlink("$dir/$file"); 
+  } 
+  return rmdir($dir); 
+} 
 
 function cpy($source, $dest, $ign){
     if(is_dir($source)) {
@@ -251,8 +253,9 @@ function cpy($source, $dest, $ign){
         while($file=readdir($dir_handle)){
             if(!in_array($file, $ign)){
                 if(is_dir($source."/".$file)){
-                    mkdir($dest."/".$file);
+                    if(!file_exists($dest."/".$file)) { mkdir($dest."/".$file); }
                     cpy($source."/".$file, $dest."/".$file, $ign);
+                    rmdir($source."/".$file);
                 } else {
                     copy($source."/".$file, $dest."/".$file);
                     unlink($source."/".$file);
@@ -260,7 +263,6 @@ function cpy($source, $dest, $ign){
             }
         }
         closedir($dir_handle);
-        rmdir($source);
     } else {
         copy($source, $dest);
         unlink($source);
@@ -269,7 +271,7 @@ function cpy($source, $dest, $ign){
 
 // Getting current codiad path
 $path = rtrim(str_replace($commit.".php", "", $_SERVER["SCRIPT_FILENAME"]),"/");
-$ignore = array(".","..", "config.json", "data", "workspace", "plugins", "backup", "config.php", $commit.".php",$commit.".zip", "Codiad-".$commit);
+$ignore = array(".","..", ".git", "config.json", "data", "workspace", "plugins", "backup", "config.php", $commit.".php",$commit.".zip", "Codiad-".$commit);
 
 $zip = new ZipArchive;
 $res = $zip->open($path."/".$commit.".zip");
@@ -290,10 +292,11 @@ if ($res === TRUE) {
     file_put_contents($path."/data/version.php", "<?php/*|" . json_encode($version) . "|*/?>");  
 
     // cleanup and restart codiad
-    rrmdir($path."/backup");
-    rmdir($path."/backup");
-    unlink($commit.".zip");
-    unlink($commit.".php");
+    @$zip->close();
+    delTree($path."/backup");
+    rmdir($path."/Codiad-".$commit);
+    unlink($path."/".$commit.".zip");
+    unlink($path."/".$commit.".php");
     header("Location: ".str_replace($commit.".php","",$_SERVER["SCRIPT_NAME"]));
   } else {
     echo "Unable to extract ".$path."/".$commit.".zip to path ".$path;
