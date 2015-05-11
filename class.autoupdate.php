@@ -271,7 +271,7 @@ function cpy($source, $dest, $ign){
 
 // Getting current codiad path
 $path = rtrim(str_replace($commit.".php", "", $_SERVER["SCRIPT_FILENAME"]),"/");
-$ignore = array(".","..", ".git", "config.json", "data", "workspace", "plugins", "backup", "config.php", $commit.".php",$commit.".zip", "Codiad-".$commit);
+$ignore = array(".","..", ".git", "config.json", "data", "workspace", "plugins", "themes", "backup", "config.php", $commit.".php",$commit.".zip", "Codiad-".$commit);
 
 $zip = new ZipArchive;
 $res = $zip->open($path."/".$commit.".zip");
