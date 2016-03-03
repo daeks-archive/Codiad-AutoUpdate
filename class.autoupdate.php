@@ -283,7 +283,7 @@ function cpy($source, $dest, $ign, $frc){
 
 // Getting current codiad path
 $path = rtrim(str_replace($commit.".php", "", $_SERVER["SCRIPT_FILENAME"]),"/");
-$ignore = array(".","..", ".git", "config.json", "data", "workspace", "plugins", "themes", "backup", "config.php", $commit.".php",$commit.".zip", "Codiad-".$commit);
+$ignore = array(".git", "config.json", "data", "workspace", "plugins", "themes", "backup", "config.php", $commit.".php",$commit.".zip", "Codiad-".$commit);
 $force = array("themes" => "default", "themes" => "README.md");
 
 $zip = new ZipArchive;
@@ -297,7 +297,7 @@ if ($res === TRUE) {
     cpy($path, $path."/backup", $ignore, $force);
     
     // move extracted files to path
-    cpy($path."/Codiad-".$commit, $path, array(".",".."), array());
+    cpy($path."/Codiad-".$commit, $path, array(), array());
 
     // store current commit to version.json
     $version = array();
