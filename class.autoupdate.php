@@ -247,20 +247,32 @@ function delTree($dir) {
   return rmdir($dir); 
 } 
 
-function cpy($source, $dest, $ign){
+function cpy($source, $dest, $ign, $frc){
     if(is_dir($source)) {
         $dir_handle=opendir($source);
         while($file=readdir($dir_handle)){
-            if(!in_array($file, $ign)){
-                if(is_dir($source."/".$file)){
-                    if(!file_exists($dest."/".$file)) { mkdir($dest."/".$file); }
-                    cpy($source."/".$file, $dest."/".$file, $ign);
-                    rmdir($source."/".$file);
-                } else {
-                    copy($source."/".$file, $dest."/".$file);
-                    unlink($source."/".$file);
+            if(!in_array($file, array(".",".."))) {
+              if(!in_array($file, $ign) || in_array($file, $frc)){
+                  if(is_dir($source."/".$file)){
+                      if(!file_exists($dest."/".$file)) { @mkdir($dest."/".$file); }
+                      cpy($source."/".$file, $dest."/".$file, $ign, $frc);
+                      rmdir($source."/".$file);
+                  } else {
+                      copy($source."/".$file, $dest."/".$file);
+                      unlink($source."/".$file);
+                  }
+              } else {
+                if(array_key_exists($file, $frc)) {
+                  if(is_dir($source."/".$file)){
+                    if(!file_exists($dest."/".$file)) { @mkdir($dest."/".$file); }
+                    cpy($source."/".$file."/".$frc[$file], $dest."/".$file."/".$frc[$file], $ign, $frc);
+                  } else {
+                      copy($source."/".$file, $dest."/".$file);
+                      unlink($source."/".$file);
+                  }
                 }
-            }
+              }
+            } 
         }
         closedir($dir_handle);
     } else {
@@ -271,7 +283,8 @@ function cpy($source, $dest, $ign){
 
 // Getting current codiad path
 $path = rtrim(str_replace($commit.".php", "", $_SERVER["SCRIPT_FILENAME"]),"/");
-$ignore = array(".","..", ".git", "config.json", "data", "workspace", "plugins", "backup", "config.php", $commit.".php",$commit.".zip", "Codiad-".$commit);
+$ignore = array(".","..", ".git", "config.json", "data", "workspace", "plugins", "themes", "backup", "config.php", $commit.".php",$commit.".zip", "Codiad-".$commit);
+$force = array("themes" => "default", "themes" => "README.md");
 
 $zip = new ZipArchive;
 $res = $zip->open($path."/".$commit.".zip");
@@ -281,10 +294,10 @@ if ($res === TRUE) {
   if($zip->extractTo($path) === true) {
     // delete old files except some directories and files
     if(!file_exists($path."/backup")) { mkdir($path."/backup"); }
-    cpy($path, $path."/backup", $ignore);
+    cpy($path, $path."/backup", $ignore, $force);
     
     // move extracted files to path
-    cpy($path."/Codiad-".$commit, $path, array(".",".."));
+    cpy($path."/Codiad-".$commit, $path, array(".",".."), array());
 
     // store current commit to version.json
     $version = array();
